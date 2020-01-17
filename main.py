@@ -16,19 +16,15 @@ url = "https://apod.nasa.gov/"
 
 def changeWallpaper(imagePath):
     SPI_SETDESKWALLPAPER = 20 
-    ctypes.windll.user32.SystemParametersInfoA(SPI_SETDESKWALLPAPER, 0, imagePath, 0)
-    
+    ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, imagePath, 0)
+#    print(ctypes.windll.user32.SystemParametersInfoA(SPI_SETDESKWALLPAPER, 0, imagePath, 0))    #should return True
 page = requests.get(url)        #makes a GET request to the web server hosting the website
 soup=BeautifulSoup(page.content, 'html.parser')
 date = soup.findAll("p")[1].text.strip()
 image = soup.find("img")
 url += image["src"]
-#urllib.request.urlretrieve(url, f"image {date}.jpg")       #download img 
-urllib.request.urlretrieve(url, "img.jpg")
-#print(url)
+urllib.request.urlretrieve(url, "img.jpg")   #download img
 #webbrowser.open(url)   #open in web browser
 changeWallpaper(path.abspath("img.jpg"))
+#print(path.abspath("img.jpg"))
 
-#pathToImg = os.path.normpath('C:\Users\PC\Desktop\gitProjects\personalAutomationMiniProjects\bkgrdPictureChange\img_of_the_day')
-#pathToImg = 'C:\Users\PC\Desktop\gitProjects\personalAutomationMiniProjects\bkgrdPictureChange\img_of_the_day'
-#changeWallpaper(pathToImg)    
